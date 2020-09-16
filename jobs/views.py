@@ -1,5 +1,5 @@
 from django.views.generic import TemplateView
 
 
-class IndexView(templateView):
+class IndexView(TemplateView):
     template_name = 'jobs/index.html'
