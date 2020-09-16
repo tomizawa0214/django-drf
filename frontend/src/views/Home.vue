@@ -1,9 +1,16 @@
 <template>
   <div>
     <v-container>
-      <h1>Job Board</h1>
       <div v-for="job in jobs" :key="job.pk">
-        <p class="mb-1">{{ job.company_name }}：{{ job.job_title }}</p>
+        <h2>
+          <router-link
+            :to="{ name: 'job', params: { id: job.id } }"
+            class="job-link"
+          >{{ job.company_name }}
+          </router-link>
+        </h2>
+        <p class="mb-1">{{ job.job_title }}</p>
+        <hr>
       </div>
     </v-container>
   </div>
@@ -20,7 +27,7 @@
     },
     methods: {
       getJobs() {
-        let endpoint = "api/jobs/"
+        let endpoint = "/api/jobs/"
         apiService(endpoint).then(data => {
           this.jobs.push(...data.results)
         })
@@ -28,7 +35,19 @@
     },
     created() {
       this.getJobs()
-      console.log(this.jobs)
+      document.title = "Job Board";
     }
   }
 </script>
+
+<style scoped>
+  .job-link {
+    font-weight: bold;
+    color: black;
+    text-decoration: none;
+  }
+
+  .job-link:hover {
+    color: #41B883;
+  }
+</style>
