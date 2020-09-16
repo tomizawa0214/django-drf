@@ -13,6 +13,11 @@
         :to="{ name: 'editor', params: { id: job.id } }"
       >編集
       </v-btn>
+      <v-btn
+        color="error"
+        @click="deleteJobData"
+      >削除 
+      </v-btn>
     </v-container>
   </div>
 </template>
@@ -43,6 +48,14 @@
           this.job = data;
           this.setPageTitle(data.company_name);
         })
+      },
+      deleteJobData() {
+        let endpoint = `/api/jobs/${this.id}/`;
+        apiService(endpoint, "DELETE").then(() => {
+          this.$router.push({
+            name: 'home'
+          });
+        });
       }
     },
     created() {
